@@ -23,3 +23,27 @@ QWidget {
     color: #ffffff;
     border-radius: 8px;
 }
+
+#l1Container {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#l2Container {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#ttsLabel {
+    font-family: "Roboto";
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#topTeamsButton {
+    font-family: "Roboto";
+    font-weight: bold;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 8px;
+}

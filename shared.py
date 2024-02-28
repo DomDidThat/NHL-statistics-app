@@ -4,9 +4,11 @@ import requests_cache
 import arrow
 import subprocess
 import os
+from datetime import date
 
+today = date.today()
 def dateOfGames():
-    url = 'https://api-web.nhle.com/v1/score/2024-02-10'
+    url = 'https://api-web.nhle.com/v1/score/' + str(today)
     r = requests.get(url).json()
     # Check if 'gameWeek' key exists in the response
     if 'gameWeek' in r:
@@ -19,7 +21,7 @@ def dateOfGames():
 #dateOfGames()
 
 def games():
-    url = 'https://api-web.nhle.com/v1/score/2024-02-10'
+    url = 'https://api-web.nhle.com/v1/score/' + str(today) 
     r = requests.get(url).json()
     if 'games' in r:
         for games in r['games']:
