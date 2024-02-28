@@ -1,0 +1,37 @@
+/* styles.qss */
+
+QWidget {
+    background-color: #ffffff; /* Set the background color to white */
+}
+
+QLabel {
+    color: #000000;
+    font-size: 20px;
+    font-family: "Roboto"; /* Set the font family */
+    font-weight: bold;
+}
+
+QLineEdit {
+    font-family: "Roboto";
+    font-size: 12px;
+    height: 40px;
+    padding: 10px;
+    border-radius: 16px;
+    background-color: #f0f0f0;  /* Lighter background */
+    color: #000000;  /* Black font color */
+    width: 40px;  /* Set width to match height */
+    font-weight: bold;  /* Added font weight */
+}
+
+QPushButton#loginbutton {
+    border-radius: 10px;
+    background-color: #000000;
+    
+    padding: 10px 20px;
+    font-family: "Roboto"; /* Set the font family */
+    font-weight: bold;
+}
+
+QPushButton#loginbutton:hover {
+    background-color: #333333;
+}
