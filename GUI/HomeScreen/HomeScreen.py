@@ -53,7 +53,7 @@ class HomeScreen(QWidget):
         
         with open("GUI/HomeScreen/HSStyle.qss", "r") as file:
             stylesheet = file.read()
-            print(stylesheet)
+            
             
         self.setLayout(layout)
         self.setStyleSheet(stylesheet)
