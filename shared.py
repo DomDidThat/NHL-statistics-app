@@ -17,7 +17,7 @@ def dateOfGames():
             dayAbbrev = gameWeek.get('dayAbbrev', '')
             numOfGames = gameWeek.get('numberOfGames', 0)
             # You can print or process the date, dayAbbrev, and numOfGames here
-            print(f"Date: {date}, Day Abbreviation: {dayAbbrev}, Number of Games: {numOfGames}")
+            print(f"{date}, {dayAbbrev}, Number of Games: {numOfGames}")
 #dateOfGames()
 
 def games():

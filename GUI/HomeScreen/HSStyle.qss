@@ -47,3 +47,68 @@ QWidget {
     color: #ffffff;
     border-radius: 8px;
 }
+
+#l3Container {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#featuredPlayersLabel {
+    font-family: "Roboto";
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#viewAllPlayersButton {
+    font-family: "Roboto";
+    font-weight: bold;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 8px;
+}
+
+#l4Container {
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+#playerSearchLabel {
+    font-family: "Roboto";
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#searchButton {
+    font-family: "Roboto";
+    font-weight: bold;
+    background-color: #000000;
+    color: #ffffff;
+    border-radius: 8px;
+}
+
+#searchPlayersSB {
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+#l5Container {
+    border: 1px solid black;
+    border-radius: 10px;
+    
+}
+
+#v1Container {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightgrey;
+}
+
+#aboutLabel {
+    font-family: "Roboto";
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    background-color: lightgrey;
+}
+
