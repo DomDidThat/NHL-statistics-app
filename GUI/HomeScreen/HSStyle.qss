@@ -25,12 +25,12 @@ QWidget {
 }
 
 #l1Container {
-    border: 2px solid black;
     border-radius: 10px;
 }
 
 #l2Container {
-    border: 2px solid black;
+    margin: 0;
+    padding: 0;
     border-radius: 10px;
 }
 
@@ -49,7 +49,6 @@ QWidget {
 }
 
 #l3Container {
-    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -68,7 +67,6 @@ QWidget {
 }
 
 #l4Container {
-    border: 2px solid black;
     border-radius: 10px;
 }
 
@@ -87,12 +85,10 @@ QWidget {
 }
 
 #searchPlayersSB {
-    border: 2px solid black;
     border-radius: 8px;
 }
 
 #l5Container {
-    border: 1px solid black;
     border-radius: 10px;
     
 }
@@ -112,3 +108,32 @@ QWidget {
     background-color: lightgrey;
 }
 
+#v2Container {
+}
+
+#s2Container {
+    margin: 0;
+    padding: 0;
+}
+
+#tpContainer {
+    background-color: lightgrey;
+}
+
+#tp2Container {
+    background-color: lightgrey;
+}
+
+#s3Container {
+    margin: 0;
+    padding: 0;
+}
+
+#s4Container {
+    margin: 0;
+    padding: 0;
+}
+
+#tp3Container {
+    background-color: lightgrey;
+}
