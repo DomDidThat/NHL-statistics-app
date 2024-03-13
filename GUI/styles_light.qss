@@ -2,7 +2,7 @@
 
 QWidget {
     border: none;
-    background-color: #ffffff;  /* White background */
+    
 }
 
 QFrame#outlineFrame {

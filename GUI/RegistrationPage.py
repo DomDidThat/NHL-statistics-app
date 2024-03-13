@@ -1,16 +1,16 @@
 import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QFormLayout
-
-
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QFormLayout, QMessageBox
+import pyodbc
+import bcrypt
 class RegistrationPage(QWidget):
     def __init__(self):
         super().__init__()
 
         self.setWindowTitle("NHL Registration")
         self.setGeometry(100, 100, 400, 600)
-
+        
         self.init_ui()
 
     def init_ui(self):
@@ -49,6 +49,7 @@ class RegistrationPage(QWidget):
         self.confirm_password_edit.setEchoMode(QLineEdit.Password)
 
         self.register_button = QPushButton("Register", self)
+        self.register_button.clicked.connect(self.register_user)
         self.register_button.setObjectName("registerButton")
         form_layout.setContentsMargins(50, 0, 50, 50)  
         form_layout.addRow(self.username_edit)
@@ -64,17 +65,61 @@ class RegistrationPage(QWidget):
         # Load stylesheet from external file
         self.load_stylesheet()           
             # Load stylesheet from external file
-        self.load_stylesheet()
+        
 
     def toggle_mode(self):
         self.dark_mode = not self.dark_mode
         self.load_stylesheet()
 
     def load_stylesheet(self):
-        stylesheet_file = "GUI/Registration/styles_dark.qss" if self.dark_mode else "GUI/Registration/styles_light.qss"
+        stylesheet_file = "GUI/styles_dark.qss" if self.dark_mode else "GUI/styles_light.qss"
         with open(stylesheet_file, "r") as file:
             stylesheet = file.read()
         self.setStyleSheet(stylesheet)
+
+               
+    def register_user(self):
+        self.conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\domus\OneDrive\Desktop\New folder\Database11.accdb;')
+        self.cursor = self.conn.cursor()
+
+        username = self.username_edit.text()
+        email = self.email_edit.text()
+        password = self.password_edit.text()
+        confirm_password = self.confirm_password_edit.text()
+
+        if password != confirm_password:
+            QMessageBox().warning(self, "Registration", "Passwords do not match!")
+            return
+
+        # Hash the password securely before storing it
+        hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+        try:
+            # Insert the user data into the database
+            query = "INSERT INTO Users (Username, Email, Password) VALUES (?, ?, ?)"
+            self.cursor.execute(query, (username, email, hashed_password))
+            self.conn.commit()
+
+            # Clear the input fields
+            self.username_edit.clear()
+            self.email_edit.clear()
+            self.password_edit.clear()
+            self.confirm_password_edit.clear()
+
+            # Display a success message
+            QMessageBox().information(self, "Registration", "User registered successfully!")
+        except pyodbc.Error as e:
+            QMessageBox().critical(self, "Registration Error", f"An error occurred: {str(e)}")
+        except Exception as e:
+            QMessageBox().critical(self, "Registration Error", f"An unexpected error occurred: {str(e)}")
+
+    def closeEvent(self, event):
+        # Close the database connection when the window is closed
+        self.conn.close()
+
+            
+
+       
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

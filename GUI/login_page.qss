@@ -1,7 +1,7 @@
 /* styles.qss */
 
 QWidget {
-    background-color: #ffffff; /* Set the background color to white */
+     /* Set the background color to white */
 }
 
 QLabel {
@@ -26,7 +26,7 @@ QLineEdit {
 QPushButton#loginbutton {
     border-radius: 10px;
     background-color: #000000;
-    
+    color: white;
     padding: 10px 20px;
     font-family: "Roboto"; /* Set the font family */
     font-weight: bold;
@@ -34,4 +34,13 @@ QPushButton#loginbutton {
 
 QPushButton#loginbutton:hover {
     background-color: #333333;
+}
+
+#registerButton {
+   border-radius: 10px;
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    font-family: "Roboto"; /* Set the font family */
+    font-weight: bold;
 }

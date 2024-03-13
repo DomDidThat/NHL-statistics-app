@@ -1,6 +1,8 @@
 import sys
 import os
-from PyQt5.QtCore import Qt 
+import pyodbc
+import bcrypt
+from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtGui import QFont, QPixmap
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QFormLayout, QSpacerItem, QSizePolicy
 
@@ -15,7 +17,8 @@ class LoginApp(QWidget):
         login_button (QPushButton): The button to initiate the login process.
         register_here_label (QLabel): The label indicating the option to register.
     """
-
+    login_Successful = pyqtSignal()
+    register = pyqtSignal()
     def __init__(self):
         super().__init__()
 
@@ -41,13 +44,14 @@ class LoginApp(QWidget):
         self.login_button.setObjectName("loginbutton")
         self.login_button.clicked.connect(self.login)
         
-        self.register_here_label = QLabel("Click here to register", self)
-        self.register_here_label.setObjectName("registerLabel") 
+        self.register_here_button = QPushButton("Click here to register", self)
+        self.register_here_button.setObjectName("registerButton")
+        self.register_here_button.clicked.connect(self.register_here)   
         
         layout.setContentsMargins(20, 20, 20, 20)  # Adjust as needed
         layout.setSpacing(10)  # Adjust the spacing between widgets
         self.title_label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
-        self.register_here_label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
+        
         
         spacer_item = QSpacerItem(0, 20)
         layout.addItem(spacer_item)
@@ -56,14 +60,14 @@ class LoginApp(QWidget):
         layout.addRow(self.username_edit)      
         layout.addRow(self.password_edit)
         layout.addRow(self.login_button)
-        layout.addRow(self.register_here_label)
+        layout.addRow(self.register_here_button)
         
-        with open("GUI/Login/login_page.qss", "r") as file:
+        with open("GUI/login_page.qss", "r") as file:
             stylesheet = file.read()
             
         self.setLayout(layout)
         self.setStyleSheet(stylesheet)
-
+        
     def login(self):
         """
         Performs the login process by retrieving the entered username and password,
@@ -72,15 +76,31 @@ class LoginApp(QWidget):
         If the login is successful, a success message is displayed.
         Otherwise, an error message is displayed.
         """
+        self.conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\domus\OneDrive\Desktop\New folder\Database11.accdb;')
+        self.cursor = self.conn.cursor()
+        
         username = self.username_edit.text()
         password = self.password_edit.text()
+        try:
+            query = "SELECT * FROM Users WHERE Username = ?"
+            self.cursor.execute(query, (username,))
+            user = self.cursor.fetchone()
 
-        # Replace the following with your actual authentication logic
-        if username == "user" and password == "pass":
-            QMessageBox.information(self, "Login Successful", "Welcome, {}".format(username))
-        else:
+            if user is not None:
+             stored_password = user.Password  # Assuming 'Password' is the column name in the database
+            # Check if the provided password matches the stored hashed password
+            if bcrypt.checkpw(password.encode(), stored_password.encode()):
+                QMessageBox.information(self, "Login Successful", "Welcome, {}".format(username))
+                self.login_Successful.emit()
+                
+                return
             QMessageBox.warning(self, "Login Failed", "Invalid username or password. Please try again.")
-
+        except Exception as e:
+            print("Error:", e)
+            QMessageBox.critical(self, "Error", "An error occurred. Please try again later.")
+    def register_here(self):
+        self.register.emit()
+            
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     login_app = LoginApp()
