@@ -72,7 +72,7 @@ class RegistrationPage(QWidget):
         self.load_stylesheet()
 
     def load_stylesheet(self):
-        stylesheet_file = "GUI/styles_dark.qss" if self.dark_mode else "GUI/styles_light.qss"
+        stylesheet_file = "GUI//styles_dark.qss" if self.dark_mode else "GUI//styles_light.qss"
         with open(stylesheet_file, "r") as file:
             stylesheet = file.read()
         self.setStyleSheet(stylesheet)

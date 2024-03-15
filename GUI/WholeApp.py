@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget, QSizePolicy
 
 from Login_Page import LoginApp as lp
 from RegistrationPage import RegistrationPage as rp
@@ -10,7 +10,7 @@ class MyApp(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("NHL Statistics App")
-        self.setGeometry(100, 100, 400, 600)
+       
 
         self.stacked_widget = QStackedWidget(self)
         self.setCentralWidget(self.stacked_widget)
@@ -19,7 +19,13 @@ class MyApp(QMainWindow):
         self.registration_page = rp()
         self.home_screen = hs()
 
+        self.login_page.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.registration_page.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.home_screen.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         
+        self.login_page.setMinimumSize(1, 1)
+        self.registration_page.setMinimumSize(1, 1)
+        self.home_screen.setMinimumSize(1, 1)
 
         self.stacked_widget.addWidget(self.login_page)
         self.stacked_widget.addWidget(self.registration_page)
@@ -29,18 +35,23 @@ class MyApp(QMainWindow):
         self.login_page.register.connect(self.show_registration_page)
 
         
-
+        
+        self.stacked_widget.currentChanged.connect(self.resizeToCurrentWidget)
         self.show_login_page()
 
     def show_login_page(self):
         self.stacked_widget.setCurrentWidget(self.login_page)
+        self.resizeToCurrentWidget(self.stacked_widget.currentIndex())
 
     def show_registration_page(self):
         self.stacked_widget.setCurrentWidget(self.registration_page)
+        self.resizeToCurrentWidget(self.stacked_widget.currentIndex())
 
     def show_home_screen(self):
         self.stacked_widget.setCurrentWidget(self.home_screen)
+        self.resizeToCurrentWidget(self.stacked_widget.currentIndex())
 
+    
     def resizeToCurrentWidget(self, index):
         current_widget = self.stacked_widget.widget(index)
         if current_widget:

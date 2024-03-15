@@ -23,7 +23,7 @@ class LoginApp(QWidget):
         super().__init__()
 
         self.setWindowTitle("NHL Statistics App - Login")
-        self.setGeometry(100, 100, 440, 400)
+        
         
         self.init_ui()
         
@@ -52,6 +52,12 @@ class LoginApp(QWidget):
         layout.setSpacing(10)  # Adjust the spacing between widgets
         self.title_label.setAlignment(Qt.AlignCenter | Qt.AlignVCenter)
         
+        self.title_label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.username_edit.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.password_edit.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.login_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        self.register_here_button.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        
         
         spacer_item = QSpacerItem(0, 20)
         layout.addItem(spacer_item)
@@ -62,7 +68,7 @@ class LoginApp(QWidget):
         layout.addRow(self.login_button)
         layout.addRow(self.register_here_button)
         
-        with open("GUI/login_page.qss", "r") as file:
+        with open("GUI//HomeScreen//login_page.qss", "r") as file:
             stylesheet = file.read()
             
         self.setLayout(layout)

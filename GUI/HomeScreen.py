@@ -1,7 +1,12 @@
 import sys
-from PyQt5.QtCore import Qt, QFile
-from PyQt5.QtGui import QFont
+import requests
+from PyQt5.QtCore import Qt, QFile, QRectF, QByteArray, QUrl
+from PyQt5.QtGui import QFont, QPixmap, QImage
+from PyQt5.QtSvg import QSvgWidget, QSvgRenderer
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QFormLayout, QHBoxLayout, QSpacerItem, QSizePolicy, QWidget
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
+from shared import top_3_teams, top_3_players
+
 
 
 class HomeScreen(QWidget):
@@ -25,8 +30,11 @@ class HomeScreen(QWidget):
         Creates the layout and adds the title label, description label, and get started button.
         Sets the fixed size of the container and applies the stylesheet.
         """
+        
         layout = QVBoxLayout()
         layout.setAlignment(Qt.AlignCenter | Qt.AlignTop)
+        top_3 = top_3_teams()
+        top_3_player = top_3_players()
         
         l1_container = QWidget(self)
         l1_container.setObjectName("l1Container")
@@ -65,9 +73,14 @@ class HomeScreen(QWidget):
         s2_container_layout.setSpacing(0)
         s2_container.setContentsMargins(0, 0, 0, 0)
         
-        tp_container = QWidget(s2_container)
-        tp_container.setObjectName("tpContainer")
-        tp_container_layout = QVBoxLayout(tp_container)
+      
+        
+        response = requests.get(top_3[0]['logo'])
+        tp_bytes = QByteArray(response.content)
+        tp_renderer = QSvgRenderer(tp_bytes)
+        tp_widget = QSvgWidget()
+        tp_widget.load(tp_bytes)
+        
         
        
         self.tts_label = QLabel("Top Teams")
@@ -79,13 +92,17 @@ class HomeScreen(QWidget):
         self.top_teams_button.setObjectName("topTeamsButton")
         self.top_teams_button.setFixedSize(100, 35)
         
-        tn1 = QLabel("Team Name")
+        
+        
+        tn1 = QLabel(top_3[0]['Team'])
         tn1.setObjectName("tn1")
         tn1.setFixedHeight(15)
+        tn1.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        td1 = QLabel("Team Data")
+        td1 = QLabel(top_3[0]['wins_losses'])
         td1.setObjectName("td1")
         td1.setFixedHeight(15)
+        td1.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         s3_container = QWidget(l2_container)
         s3_container.setObjectName("s3Container")
@@ -93,18 +110,22 @@ class HomeScreen(QWidget):
         s3_container_layout.setSpacing(0)
         s3_container.setContentsMargins(0, 0, 0, 0)
         
+        response = requests.get(top_3[1]['logo'])
+        tp2_bytes = QByteArray(response.content)
+        tp2_renderer = QSvgRenderer(tp2_bytes)
+        tp2_widget = QSvgWidget()
+        tp2_widget.load(tp2_bytes)
+        tp2_widget.setFixedSize(150, 100)
         
-        tp2_container = QWidget(s3_container)
-        tp2_container.setObjectName("tpContainer")
-        tp2_container_layout = QVBoxLayout(tp2_container)
-        
-        tn2 = QLabel("Team Name")
+        tn2 = QLabel(top_3[1]['Team'])
         tn2.setObjectName("tn2")
         tn2.setFixedHeight(15)
+        tn2.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        td2 = QLabel("Team Data")
+        td2 = QLabel(top_3[1]['wins_losses'])
         td2.setObjectName("td2")
         td2.setFixedHeight(15)
+        td2.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         s4_container = QWidget(l2_container)
         s4_container.setObjectName("s4Container")
@@ -112,17 +133,22 @@ class HomeScreen(QWidget):
         s4_container_layout.setSpacing(0)
         s4_container.setContentsMargins(0, 0, 0, 0)
         
-        tp3_container = QWidget(s4_container)
-        tp3_container.setObjectName("tp3Container")
-        tp3_container_layout = QVBoxLayout(tp3_container)
+        response = requests.get(top_3[2]['logo'])
+        tp3_bytes = QByteArray(response.content)
+        tp3_renderer = QSvgRenderer(tp2_bytes)
+        tp3_widget = QSvgWidget()
+        tp3_widget.load(tp3_bytes)
         
-        tn3 = QLabel("Team Name")
+        
+        tn3 = QLabel(top_3[2]['Team'])
         tn3.setObjectName("tn3")
         tn3.setFixedHeight(15)
+        tn3.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        td3 = QLabel("Team Data")
+        td3 = QLabel(top_3[2]['wins_losses'])
         td3.setObjectName("td3")
         td3.setFixedHeight(15)
+        td3.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         l3_container = QWidget(self)    
         l3_container.setObjectName("l3Container")
@@ -145,37 +171,76 @@ class HomeScreen(QWidget):
         fp1_container.setObjectName("fp1Container")
         fp1_container_layout = QVBoxLayout(fp1_container)
         
-        fp1_name = QLabel("Player Name")
+        
+        fp1_url = top_3_player[0]['Picture']
+        fp1_image = QImage()
+        fp1_image.loadFromData(requests.get(fp1_url).content)
+        fp1_pixmap = QPixmap(fp1_image) 
+        fp1_pixmap = fp1_pixmap.scaled(300, 150, Qt.KeepAspectRatio)
+        fp1_label = QLabel()
+        fp1_label.setPixmap(QPixmap(fp1_pixmap))
+        fp1_label.show()
+        fp1_label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        
+        fp1_name = QLabel(top_3_player[0]['Player'])
         fp1_name.setObjectName("featuredPlayer1")
         fp1_name.setFixedHeight(15)
+        fp1_name.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        fp1_data = QLabel("Player Data")
+        fp1_data = QLabel(top_3_player[0]['Points'])
         fp1_data.setObjectName("featuredPlayer1Data")
         fp1_data.setFixedHeight(15)
+        fp1_data.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         fp2_container = QWidget(l3_container)
         fp2_container.setObjectName("fp2Container")
         fp2_container_layout = QVBoxLayout(fp2_container)
         
-        fp2_name = QLabel("Player Name")
+        
+        fp2_url = top_3_player[1]['Picture']
+        fp2_image = QImage()
+        fp2_image.loadFromData(requests.get(fp2_url).content)
+        fp2_pixmap = QPixmap(fp2_image) 
+        fp2_pixmap = fp2_pixmap.scaled(300, 150, Qt.KeepAspectRatio)
+        fp2_label = QLabel()
+        fp2_label.setPixmap(QPixmap(fp2_pixmap))
+        fp2_label.show()
+        fp2_label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        
+        
+        fp2_name = QLabel(top_3_player[1]['Player'])
         fp2_name.setObjectName("featuredPlayer2")
         fp2_name.setFixedHeight(15)
+        fp2_name.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        fp2_data = QLabel("Player Data")
+        fp2_data = QLabel(top_3_player[1]['Points'])
         fp2_data.setObjectName("featuredPlayer2Data")
         fp2_data.setFixedHeight(15)
+        fp2_data.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         fp3_container = QWidget(l3_container)
         fp3_container.setObjectName("fp3Container")
         fp3_container_layout = QVBoxLayout(fp3_container)
         
-        fp3_name = QLabel("Player Name")
+        fp3_url = top_3_player[2]['Picture']
+        fp3_image = QImage()
+        fp3_image.loadFromData(requests.get(fp3_url).content)
+        fp3_pixmap = QPixmap(fp3_image) 
+        fp3_pixmap = fp3_pixmap.scaled(300, 150, Qt.KeepAspectRatio)
+        fp3_label = QLabel()
+        fp3_label.setPixmap(QPixmap(fp3_pixmap))
+        fp3_label.show()
+        fp3_label.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        
+        fp3_name = QLabel(top_3_player[2]['Player'])
         fp3_name.setObjectName("featuredPlayer3")
         fp3_name.setFixedHeight(15)
+        fp3_name.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
-        fp3_data = QLabel("Player Data")
+        fp3_data = QLabel(top_3_player[2]['Points'])
         fp3_data.setObjectName("featuredPlayer3Data")
         fp3_data.setFixedHeight(15)
+        fp3_data.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         
         
@@ -231,11 +296,13 @@ class HomeScreen(QWidget):
         v2_container.setFixedSize(250, 175)
         v3_container.setFixedSize(370, 175)
         
-        tp_container.setFixedSize(50, 50)
-        tp2_container.setFixedSize(50, 50)
+        
+        
+        
+       
         
         s2_container.setFixedSize(200, 175)
-        s3_container.setFixedSize(200, 175)
+        s3_container.setFixedSize(200, 200)
         s4_container.setFixedSize(200, 175)
         
         fp1_container.setFixedSize(200, 175)
@@ -259,17 +326,20 @@ class HomeScreen(QWidget):
         v2_container_layout.addWidget(self.top_teams_button, alignment=Qt.AlignLeft )
         v2_container_layout.setAlignment(Qt.AlignLeft)
         
-        s2_container_layout.addWidget(tp_container)
+        s2_container_layout.addWidget(tp_widget)
+        s2_container_layout.addSpacing(10)
         s2_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter) 
         s2_container_layout.addWidget(tn1)
         s2_container_layout.addWidget(td1)
         
-        s3_container_layout.addWidget(tp2_container)
+        s3_container_layout.addWidget(tp2_widget)
+        s3_container_layout.addSpacing(10)
         s3_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         s3_container_layout.addWidget(tn2)
         s3_container_layout.addWidget(td2)
         
-        s4_container_layout.addWidget(tp3_container)
+        s4_container_layout.addWidget(tp3_widget)
+        s4_container_layout.addSpacing(10)
         s4_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         s4_container_layout.addWidget(tn3)
         s4_container_layout.addWidget(td3)
@@ -284,14 +354,17 @@ class HomeScreen(QWidget):
         l3_container_layout.addWidget(fp3_container, alignment=Qt.AlignLeft)
         
         fp1_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        fp1_container_layout.addWidget(fp1_label)
         fp1_container_layout.addWidget(fp1_name)
         fp1_container_layout.addWidget(fp1_data)
         
         fp2_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        fp2_container_layout.addWidget(fp2_label)
         fp2_container_layout.addWidget(fp2_name)
         fp2_container_layout.addWidget(fp2_data)
         
         fp3_container_layout.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        fp3_container_layout.addWidget(fp3_label)
         fp3_container_layout.addWidget(fp3_name)
         fp3_container_layout.addWidget(fp3_data)
         
@@ -328,8 +401,7 @@ class HomeScreen(QWidget):
         self.setStyleSheet(stylesheet)
         
         
-        
-        
+    
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

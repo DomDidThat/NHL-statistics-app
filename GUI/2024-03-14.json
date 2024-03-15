@@ -1,0 +1,216 @@
+{
+    "date": "2024-03-14",
+    "startDate": "2024-02-29",
+    "endDate": "2024-03-28",
+    "broadcasts": [
+        {
+            "startTime": "2024-03-14T00:00:00",
+            "endTime": "2024-03-14T00:30:00",
+            "durationSeconds": 1800,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324ACC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T00:30:00",
+            "endTime": "2024-03-14T01:30:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly With Bonus Coverage",
+            "description": "Missed the game? On The Fly conveniently recaps all games, every night. Post game interviews, highlights, expert analysis, and press conferences keep you in touch with the latest headlines after every game. (Live with bonus coverage)",
+            "houseNumber": "H60COLVAN03132024",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T01:30:00",
+            "endTime": "2024-03-14T02:30:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324SOR",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T02:30:00",
+            "endTime": "2024-03-14T03:30:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T03:30:00",
+            "endTime": "2024-03-14T04:30:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T04:30:00",
+            "endTime": "2024-03-14T05:00:00",
+            "durationSeconds": 1800,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T05:00:00",
+            "endTime": "2024-03-14T06:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T06:00:00",
+            "endTime": "2024-03-14T07:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T07:00:00",
+            "endTime": "2024-03-14T08:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T08:00:00",
+            "endTime": "2024-03-14T09:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T09:00:00",
+            "endTime": "2024-03-14T10:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T10:00:00",
+            "endTime": "2024-03-14T11:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T11:00:00",
+            "endTime": "2024-03-14T12:00:00",
+            "durationSeconds": 3600,
+            "title": "On The Fly",
+            "description": "On The Fly",
+            "houseNumber": "HOTF24R031324CC",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "onthefly.png"
+        },
+        {
+            "startTime": "2024-03-14T12:00:00",
+            "endTime": "2024-03-14T14:00:00",
+            "durationSeconds": 7200,
+            "title": "NHL Game",
+            "description": "Los Angeles Kings at St. Louis Blues on 3/13/2024 From Enterprise Center",
+            "houseNumber": "H120LAKSTL03132024",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "nhl.png"
+        },
+        {
+            "startTime": "2024-03-14T14:00:00",
+            "endTime": "2024-03-14T16:00:00",
+            "durationSeconds": 7200,
+            "title": "NHL Game",
+            "description": "Washington Capitals at Edmonton Oilers on 3/13/2024 From Rogers Place",
+            "houseNumber": "H120WSHEDM03132024",
+            "broadcastType": "HD",
+            "broadcastStatus": "",
+            "broadcastImageUrl": "nhl.png"
+        },
+        {
+            "startTime": "2024-03-14T16:00:00",
+            "endTime": "2024-03-14T18:00:00",
+            "durationSeconds": 7200,
+            "title": "NHL Now",
+            "description": "NHL Now",
+            "houseNumber": "HNOW24R031424LV",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "nhlnow.png"
+        },
+        {
+            "startTime": "2024-03-14T18:00:00",
+            "endTime": "2024-03-14T19:00:00",
+            "durationSeconds": 3600,
+            "title": "NHL Tonight: Pre-Game Skate",
+            "description": "NHL Tonight: Pre-Game Skate",
+            "houseNumber": "HPGS24R031424LV",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "nhltonight.png"
+        },
+        {
+            "startTime": "2024-03-14T19:00:00",
+            "endTime": "2024-03-14T23:00:00",
+            "durationSeconds": 14400,
+            "title": "NHL Tonight",
+            "description": "NHL Tonight",
+            "houseNumber": "HNHLT24RS031424LV",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "nhltonight.png"
+        },
+        {
+            "startTime": "2024-03-14T23:00:00",
+            "endTime": "2024-03-15T00:00:00",
+            "durationSeconds": 3600,
+            "title": "NHL Tonight With Bonus Coverage",
+            "description": "Takes you on the ice with live look-ins, breaking news, real-time scores, and expert analysis. NHL Veterans breakdown highlights and demo game situations. (Live with bonus coverage)",
+            "houseNumber": "H60VGKCGY03142024",
+            "broadcastType": "HD",
+            "broadcastStatus": "LIVE",
+            "broadcastImageUrl": "nhltonight.png"
+        }
+    ]
+}
