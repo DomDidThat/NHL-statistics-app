@@ -34,8 +34,6 @@ class MyApp(QMainWindow):
         self.login_page.login_Successful.connect(self.show_home_screen)
         self.login_page.register.connect(self.show_registration_page)
 
-        
-        
         self.stacked_widget.currentChanged.connect(self.resizeToCurrentWidget)
         self.show_login_page()
 

@@ -79,7 +79,11 @@ class RegistrationPage(QWidget):
 
                
     def register_user(self):
-        self.conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\Users\domus\OneDrive\Desktop\New folder\Database11.accdb;')
+        conn_str = (
+            r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};"
+            r"DBQ=C:\\Users\\domus\\OneDrive - Hillsborough Community College\\Desktop\\DB\\Database21.accdb"
+        )
+        self.conn = pyodbc.connect(conn_str)
         self.cursor = self.conn.cursor()
 
         username = self.username_edit.text()
