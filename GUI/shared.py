@@ -3,6 +3,8 @@ import requests
 import requests_cache
 import os
 from datetime import date
+import aiohttp
+import asyncio
 
 today = date.today()
 
@@ -68,4 +70,94 @@ def top_3_teams():
                 
             })
     return(top_3)
+
+
+nhl_team_abbreviations = [
+    "ANA",  # Anaheim Ducks
+    "ARI",  # Arizona Coyotes
+    "BOS",  # Boston Bruins
+    "BUF",  # Buffalo Sabres
+    "CGY",  # Calgary Flames
+    "CAR",  # Carolina Hurricanes
+    "CHI",  # Chicago Blackhawks
+    "COL",  # Colorado Avalanche
+    "CBJ",  # Columbus Blue Jackets
+    "DAL",  # Dallas Stars
+    "DET",  # Detroit Red Wings
+    "EDM",  # Edmonton Oilers
+    "FLA",  # Florida Panthers
+    "LAK",  # Los Angeles Kings
+    "MIN",  # Minnesota Wild
+    "MTL",  # Montreal Canadiens
+    "NSH",  # Nashville Predators
+    "NJD",  # New Jersey Devils
+    "NYI",  # New York Islanders
+    "NYR",  # New York Rangers
+    "OTT",  # Ottawa Senators
+    "PHI",  # Philadelphia Flyers
+    "PIT",  # Pittsburgh Penguins
+    "SJS",  # San Jose Sharks
+    "STL",  # St. Louis Blues
+    "TBL",  # Tampa Bay Lightning
+    "TOR",  # Toronto Maple Leafs
+    "VAN",  # Vancouver Canucks
+    "VGK",  # Vegas Golden Knights
+    "WSH",  # Washington Capitals
+    "WPG",  # Winnipeg Jets
+]
+
+
+
+async def fetch_team_rosters(session, abbreviation):
+    url = f"https://api-web.nhle.com/v1/roster/{abbreviation}/current"
+    async with session.get(url) as response:
+        if response.status == 200:
+            roster_data = await response.json()
+            players = roster_data.get('forwards', [])
+            return [
+                player.get("id")
+             for player in players]
+        else:
+            return []
+
+async def fetch_player_stats(session, player_id):
+    url = f"https://api-web.nhle.com/v1/player/{player_id}/landing"
+    async with session.get(url) as r:
+        if r.status == 200:
+            player_data = await r.json()
+            featured_stats = player_data.get('featuredStats',{})
+            regular_season_stats = featured_stats.get('regularSeason', {})
+            player_stats = regular_season_stats.get('subSeason', {})
+            games_played = player_stats.get('gamesPlayed',{})
+            goals = player_stats.get('goals')
+            assists = player_stats.get('assists')
+            points = player_stats.get('points')
+            player_first_name = player_data.get('firstName', {}).get('default')
+            player_last_name = player_data.get('lastName', {}).get('default')
+            return {
+                "Name": f"{player_first_name} {player_last_name}",
+                "Games Played" : games_played,
+                "Goals" : goals,
+                "Assists": assists,
+                "Points" : points
+                
+            }
+        else:
+            return {"Name": "No player found", "Stats": {}}
+
+async def get_all_team_rosters_and_player_stats():
+    all_player_stats = []
+    async with aiohttp.ClientSession() as session:
+        tasks = []
+        for abbreviation in nhl_team_abbreviations:
+            player_ids = await fetch_team_rosters(session, abbreviation)
+            tasks.extend([fetch_player_stats(session, player_id) for player_id in player_ids])
+        player_stats = await asyncio.gather(*tasks)
+        all_player_stats.extend(player_stats)
+    return all_player_stats
+
+
+# Call the function
+player_stats = asyncio.run(get_all_team_rosters_and_player_stats())
+
 
