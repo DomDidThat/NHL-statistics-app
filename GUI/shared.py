@@ -2,6 +2,7 @@ import json
 import requests
 import requests_cache
 import os
+import unittest
 from datetime import date
 import aiohttp
 import asyncio
@@ -50,27 +51,6 @@ def top_3_players():
             })
     return(top_3_playersl)
     
-def top_3_teams():
-    url = 'https://api-web.nhle.com/v1/standings/now'
-    r= requests.get(url).json()
-    top_3 = []
-    if 'standings' in r:
-        for team in r['standings'][:3]:
-            team_name = team.get('teamName', {}).get('default')
-            points = team.get('points', {})
-            wins = team.get('wins', {})
-            losses = team.get('losses', {})
-            logo = team.get('teamLogo', {})
-            wins_and_losses = f"{wins} - {losses}"
-            top_3.append({
-                'Team': team_name,
-                'wins_losses': wins_and_losses,
-                'Points': points,
-                'logo': logo
-                
-            })
-    return(top_3)
-
 
 nhl_team_abbreviations = [
     "ANA",  # Anaheim Ducks
@@ -106,17 +86,14 @@ nhl_team_abbreviations = [
     "WPG",  # Winnipeg Jets
 ]
 
-
+requests_cache.install_cache('nhl_api_cache', expire_after=3600)
 
 async def fetch_team_rosters(session, abbreviation):
     url = f"https://api-web.nhle.com/v1/roster/{abbreviation}/current"
     async with session.get(url) as response:
         if response.status == 200:
             roster_data = await response.json()
-            players = roster_data.get('forwards', [])
-            return [
-                player.get("id")
-             for player in players]
+            return [player.get("id") for player in roster_data.get('forwards', [])]
         else:
             return []
 
@@ -125,39 +102,46 @@ async def fetch_player_stats(session, player_id):
     async with session.get(url) as r:
         if r.status == 200:
             player_data = await r.json()
-            featured_stats = player_data.get('featuredStats',{})
-            regular_season_stats = featured_stats.get('regularSeason', {})
-            player_stats = regular_season_stats.get('subSeason', {})
-            games_played = player_stats.get('gamesPlayed',{})
-            goals = player_stats.get('goals')
-            assists = player_stats.get('assists')
-            points = player_stats.get('points')
-            player_first_name = player_data.get('firstName', {}).get('default')
-            player_last_name = player_data.get('lastName', {}).get('default')
-            return {
-                "Name": f"{player_first_name} {player_last_name}",
-                "Games Played" : games_played,
-                "Goals" : goals,
-                "Assists": assists,
-                "Points" : points
-                
-            }
+            return extract_player_stats(player_data)
         else:
             return {"Name": "No player found", "Stats": {}}
 
-async def get_all_team_rosters_and_player_stats():
-    all_player_stats = []
-    async with aiohttp.ClientSession() as session:
-        tasks = []
-        for abbreviation in nhl_team_abbreviations:
-            player_ids = await fetch_team_rosters(session, abbreviation)
-            tasks.extend([fetch_player_stats(session, player_id) for player_id in player_ids])
-        player_stats = await asyncio.gather(*tasks)
-        all_player_stats.extend(player_stats)
-    return all_player_stats
+def extract_player_stats(player_data):
+    player_fname = player_data.get('firstName').get('default')
+    player_lname = player_data.get('lastName').get('default')
+    team = player_data.get('currentTeamAbbrev')
+    featured_stats = player_data.get('featuredStats', {})
+    regular_season_stats = featured_stats.get('regularSeason', {})
+    player_stats = regular_season_stats.get('subSeason', {})
+    return {
+        "Name": f"{player_fname} {player_lname}",
+        "Team": team,
+        "Games Played": player_stats.get('gamesPlayed', 0),
+        "Goals": player_stats.get('goals', 0),
+        "Assists": player_stats.get('assists', 0),
+        "Points": player_stats.get('points', 0),
+        "Plus Minus": player_stats.get('plusMinus', 0),
+        "Pim": player_stats.get('pim', 0),
+        "Game Winning Goals": player_stats.get('gameWinningGoals', 0),
+        "OT Goals": player_stats.get('otGoals' , 0),
+        "Shots": player_stats.get('shots', 0),
+        "Shooting Percentage": format_shooting_percentage(player_stats.get('shootingPctg'))
+    }
 
+def format_shooting_percentage(shooting_pctg):
+    if shooting_pctg is None:
+        return 0
+    return "{:.2f}%".format(shooting_pctg * 100)
+
+async def get_all_team_rosters_and_player_stats():
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_team_rosters(session, abbreviation) for abbreviation in nhl_team_abbreviations]
+        player_ids_lists = await asyncio.gather(*tasks)
+
+        tasks = [fetch_player_stats(session, player_id) for player_ids in player_ids_lists for player_id in player_ids]
+        all_player_stats = await asyncio.gather(*tasks)
+
+    return all_player_stats
 
 # Call the function
 player_stats = asyncio.run(get_all_team_rosters_and_player_stats())
-
-

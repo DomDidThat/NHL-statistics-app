@@ -5,7 +5,8 @@ from PyQt5.QtGui import QFont, QPixmap, QImage
 from PyQt5.QtSvg import QSvgWidget, QSvgRenderer
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QFormLayout, QHBoxLayout, QSpacerItem, QSizePolicy, QWidget
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
-from shared import top_3_teams, top_3_players
+from shared import top_3_players
+from team_stats import top_3_teams
 
 
 
