@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QDialog, QVBoxLayout, QLabel, QTableWidget, QTableWidgetItem, QPushButton, QHeaderView, QMessageBox, QSizePolicy
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QBrush, QColor
 import asyncio
-from TeamStatsPage import fetch_team_data
+
+from team_stats import team_standings  # Import the function to fetch team data
 
 class TeamStatsDialog(QDialog):
     def __init__(self, parent=None):
@@ -57,3 +57,8 @@ class TeamStatsDialog(QDialog):
 
     def sort_by_wins(self):
         self.table_widget.sortItems(2, Qt.DescendingOrder)  # Assuming 'Wins' column is at index 2
+        
+async def fetch_team_data():
+     # Fetch team data asynchronously
+    team_data = await team_standings()  # Use the appropriate function to fetch team data
+    return team_data

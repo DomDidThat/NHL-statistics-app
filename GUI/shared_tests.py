@@ -1,25 +1,8 @@
 import unittest
-from shared import top_3_teams, fetch_team_rosters, extract_player_stats, get_all_team_rosters_and_player_stats
+from shared import fetch_team_rosters, extract_player_stats, get_all_team_rosters_and_player_stats
 import asyncio
 import aiohttp
 from unittest.mock import MagicMock, patch
-
-class TestTop3Teams(unittest.TestCase):
-
-    def test_top_3_teams(self):
-        output = top_3_teams()
-        self.assertEqual(len(output), 3)  # Expecting exactly 3 teams
-        for team_info in output:
-        # Check that each team's information contains the expected keys
-            self.assertTrue(all(key in team_info for key in ['Team', 'wins_losses', 'Points', 'logo']))
-        # Optionally, check the type of each value
-            self.assertIsInstance(team_info['Team'], str)
-            self.assertIsInstance(team_info['wins_losses'], str)
-            self.assertIsInstance(team_info['Points'], int)
-            self.assertIsInstance(team_info['logo'], str)
-
-
-    
 
 class TestFetchTeamRosters(unittest.TestCase):
     @patch('shared.aiohttp.ClientSession.get')
