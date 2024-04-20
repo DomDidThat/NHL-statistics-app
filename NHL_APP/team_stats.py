@@ -1,4 +1,4 @@
-import json
+
 import requests
 import requests_cache
 import os
@@ -43,6 +43,20 @@ def top_3_teams():
     return top_3  # Returns the list of top 3 teams.
 
 async def team_standings():
+    """
+    Asynchronously fetches and returns the standings of NHL teams.
+
+    This function makes an asynchronous GET request to the NHL standings API and processes the response
+    to extract detailed information about each team. The information includes the team's name, games played,
+    wins, losses, points, goal differential, goal differential percentage, goals against, goals for, and goals
+    for percentage. The goal differential percentage and goals for percentage are formatted using a shared utility
+    function.
+
+    Returns:
+        list of dict: A list of dictionaries, each representing a team and its standings information. Each dictionary
+        contains keys for 'Team', 'Games Played', 'Wins', 'Losses', 'Points', 'Goal Differential', 'Goal Differential
+        Percentage', 'Goal Against', 'Goal For', and 'Goals For Percentage'.
+    """
     url = 'https://api-web.nhle.com/v1/standings/now'
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
@@ -75,8 +89,19 @@ async def team_standings():
             })
     return team_standings
 async def main():
-    standings = await team_standings()
-    return standings
+    """
+    Asynchronously retrieves and returns the NHL team standings.
+
+    This function serves as the entry point for the asynchronous execution of the script. It calls the
+    `team_standings` function to fetch the current standings of NHL teams and awaits its completion. The
+    retrieved standings are then returned.
+
+    Returns:
+        list of dict: A list containing dictionaries for each team's standings, including team name, games played,
+        wins, losses, points, goal differential, and other relevant statistics.
+    """
+    standings = await team_standings()  # Calls the team_standings function and waits for it to complete.
+    return standings  # Returns the list of team standings.
 
 if __name__ == '__main__':
     asyncio.run(main())

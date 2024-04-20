@@ -3,6 +3,9 @@ from shared import fetch_team_rosters, extract_player_stats, get_all_team_roster
 import asyncio
 import aiohttp
 from unittest.mock import MagicMock, patch
+import sys
+print(sys.path)
+
 
 class TestFetchTeamRosters(unittest.TestCase):
     @patch('shared.aiohttp.ClientSession.get')
@@ -28,6 +31,16 @@ class TestFetchTeamRosters(unittest.TestCase):
 class TestExtractPlayerStats(unittest.TestCase):
     
     def test_extract_player_stats(self):
+        """
+        Test the `extract_player_stats` function to ensure it correctly transforms player data into a specified format.
+
+        This test provides a mock player data dictionary, simulating the structure that would be received from an external
+        API. It then calls the `extract_player_stats` function with this mock data and compares the result to an expected
+        dictionary format, asserting equality to verify correct functionality.
+
+        The expected result includes formatted player statistics such as name, team, and various performance metrics,
+        demonstrating the function's ability to parse and reformat nested data structures.
+        """
         player_data = {
             'firstName': {'default': 'John'},
             'lastName': {'default': 'Doe'},

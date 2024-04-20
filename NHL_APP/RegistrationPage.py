@@ -6,11 +6,15 @@ import pyodbc
 import bcrypt
 class RegistrationPage(QWidget):
     def __init__(self):
+        """
+        Initialize the main window.
+
+        """
         super().__init__()
 
         self.setWindowTitle("NHL Registration")
         self.setGeometry(100, 100, 400, 600)
-        
+
         self.init_ui()
 
     def init_ui(self):
@@ -65,20 +69,30 @@ class RegistrationPage(QWidget):
         # Load stylesheet from external file
         self.load_stylesheet()           
             # Load stylesheet from external file
-        
 
     def toggle_mode(self):
+        """
+        Toggle between dark and light mode.
+
+        """
         self.dark_mode = not self.dark_mode
         self.load_stylesheet()
 
     def load_stylesheet(self):
-        stylesheet_file = "GUI//styles_dark.qss" if self.dark_mode else "GUI//styles_light.qss"
+        """
+        Load the stylesheet for the GUI.
+
+        """
+        stylesheet_file = "NHL_APP//styles_dark.qss" if self.dark_mode else "NHL_APP//styles_light.qss"
         with open(stylesheet_file, "r") as file:
             stylesheet = file.read()
         self.setStyleSheet(stylesheet)
 
-               
     def register_user(self):
+        """
+        Register a new user.
+
+        """
         conn_str = (
             r"Driver={Microsoft Access Driver (*.mdb, *.accdb)};"
             r"DBQ=C:\\Users\\domus\\OneDrive - Hillsborough Community College\\Desktop\\DB\\Database21.accdb"
@@ -91,7 +105,7 @@ class RegistrationPage(QWidget):
         password = self.password_edit.text()
         confirm_password = self.confirm_password_edit.text()
 
-        if password != confirm_password:
+        if password!= confirm_password:
             QMessageBox().warning(self, "Registration", "Passwords do not match!")
             return
 
@@ -100,7 +114,7 @@ class RegistrationPage(QWidget):
 
         try:
             # Insert the user data into the database
-            query = "INSERT INTO Users (Username, Email, Password) VALUES (?, ?, ?)"
+            query = "INSERT INTO Users (Username, Email, Password) VALUES (?,?,?)"
             self.cursor.execute(query, (username, email, hashed_password))
             self.conn.commit()
 
@@ -118,9 +132,14 @@ class RegistrationPage(QWidget):
             QMessageBox().critical(self, "Registration Error", f"An unexpected error occurred: {str(e)}")
 
     def closeEvent(self, event):
-        # Close the database connection when the window is closed
-        self.conn.close()
+        """
+        Close the database connection when the window is closed.
 
+        """
+        # Close the database connection when the window is closed
+        self.conn.close()           
+                # Load stylesheet from external file
+            
             
 
        

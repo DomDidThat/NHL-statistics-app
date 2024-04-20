@@ -69,7 +69,7 @@ class LoginApp(QWidget):
         layout.addRow(self.register_here_button)
         
         try:
-            with open("GUI//HomeScreen//login_page.qss", "r") as file:
+            with open("NHL_APP//HomeScreen//login_page.qss", "r") as file:
                 stylesheet = file.read()
                 self.setStyleSheet(stylesheet)
         except FileNotFoundError as e:

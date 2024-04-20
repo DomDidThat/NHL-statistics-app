@@ -1,10 +1,9 @@
 import sys
 import requests
-from PyQt5.QtCore import Qt, QFile, QRectF, QByteArray, QUrl
-from PyQt5.QtGui import QFont, QPixmap, QImage
+from PyQt5.QtCore import Qt, QByteArray
+from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtSvg import QSvgWidget, QSvgRenderer
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QFormLayout, QHBoxLayout, QSpacerItem, QSizePolicy, QWidget
-from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QSizePolicy, QWidget
 from shared import top_3_players
 from team_stats import top_3_teams
 
@@ -394,7 +393,7 @@ class HomeScreen(QWidget):
         
         
         
-        with open("GUI/HSStyle.qss", "r") as file:
+        with open("NHL_APP/HSStyle.qss", "r") as file:
             stylesheet = file.read()
             
             
