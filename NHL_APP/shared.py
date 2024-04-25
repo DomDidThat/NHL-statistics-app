@@ -1,8 +1,6 @@
-import json
+
 import requests
 import requests_cache
-import os
-import unittest
 from datetime import date
 import aiohttp
 import asyncio

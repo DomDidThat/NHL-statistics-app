@@ -1,0 +1,10 @@
+Requirements:
+PyQt5
+requests
+requests_cache
+sys
+pyodbc
+bcrypt
+aiohttp
+asyncio
+unittest

@@ -23,7 +23,7 @@ class LoginApp(QWidget):
         super().__init__()
 
         self.setWindowTitle("NHL Statistics App - Login")
-        
+        self.login_attempts = 0 # Keeps track of the number of login attempts
         
         self.init_ui()
         
@@ -101,14 +101,21 @@ class LoginApp(QWidget):
             user = self.cursor.fetchone()
 
             if user is not None:
-             stored_password = user.Password  # Assuming 'Password' is the column name in the database
-            # Check if the provided password matches the stored hashed password
-            if bcrypt.checkpw(password.encode(), stored_password.encode()):
-                QMessageBox.information(self, "Login Successful", "Welcome, {}".format(username))
-                self.login_Successful.emit()
+                stored_password = user.Password  # Assuming 'Password' is the column name in the database
+                # Check if the provided password matches the stored hashed password
+                if bcrypt.checkpw(password.encode(), stored_password.encode()):
+                    QMessageBox.information(self, "Login Successful", "Welcome, {}".format(username))
+                    self.login_Successful.emit()
                 
-                return
-            QMessageBox.warning(self, "Login Failed", "Invalid username or password. Please try again.")
+                    return
+                else:
+                    self.login_attempts += 1
+                    if self.login_attempts >= 5:
+                        QMessageBox.warning(self, "Login Failed", "You have exceeded the maximum number of login attempts. Please try again later.")
+                    else:
+                        QMessageBox.warning(self, "Login Failed", "Invalid username or password. Please try again.")
+            else: 
+                QMessageBox.warning(self, "Login Failed", "Invalid username or password. Please try again.")
         except Exception as e:
             print("Error:", e)
             QMessageBox.critical(self, "Error", "An error occurred. Please try again later.")

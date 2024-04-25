@@ -104,15 +104,31 @@ class RegistrationPage(QWidget):
         email = self.email_edit.text()
         password = self.password_edit.text()
         confirm_password = self.confirm_password_edit.text()
+        
+        # Validate registration data
+        if not username or not email or not password:
+            QMessageBox().warning(self, "Registration", "Please fill in all fields.")
+            return
 
         if password!= confirm_password:
             QMessageBox().warning(self, "Registration", "Passwords do not match!")
+            return
+        
+        if len(password) < 8:
+            QMessageBox().warning(self, "Registration", "Password must be at least 8 characters long.")
             return
 
         # Hash the password securely before storing it
         hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
 
         try:
+            #check if the email already exists in the database
+            query = "SELECT * FROM Users WHERE Email = ?"
+            self.cursor.execute(query, (email,))
+            result = self.cursor.fetchone()
+            if result[0] > 0:
+                QMessageBox().warning(self, "Registration", "Email already exists!")
+                return
             # Insert the user data into the database
             query = "INSERT INTO Users (Username, Email, Password) VALUES (?,?,?)"
             self.cursor.execute(query, (username, email, hashed_password))
