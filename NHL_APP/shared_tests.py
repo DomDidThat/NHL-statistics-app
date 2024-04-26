@@ -6,7 +6,6 @@ from unittest.mock import MagicMock, patch
 import sys
 print(sys.path)
 
-
 class TestFetchTeamRosters(unittest.TestCase):
     @patch('shared.aiohttp.ClientSession.get')
     async def test_fetch_team_rosters(self, mock_get):

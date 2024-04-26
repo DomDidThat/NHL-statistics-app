@@ -1,59 +1,9 @@
-
 import requests
-import requests_cache
 from datetime import date
-import aiohttp
 import asyncio
-import sys
-
-print(sys.path)
+import aiohttp
 
 today = date.today()
-requests_cache.install_cache('nhl_api_cache', expire_after=3600)
-
-def games():
-    """
-    Fetches and processes the list of NHL games for the current day from the NHL API.
-
-    This function constructs a request to the NHL API to retrieve the games scheduled for today.
-    It then parses the JSON response to extract relevant details about each game, including the
-    date, teams involved, their scores, and the game state. These details are compiled into a list
-    of dictionaries, where each dictionary represents a single game.
-
-    Returns:
-        games_list (list of dict): A list of dictionaries, each containing details about a game.
-            The keys in each dictionary include 'game_date', 'home_team_name', 'Game state', and 'Score'.
-            'game_date' is a string representing the date of the game.
-            'home_team_name' is a string formatted as "HomeTeam vs AwayTeam".
-            'Game state' indicates the current state of the game (e.g., "In Progress", "Final").
-            'Score' is a string representing the current score of the game, formatted as "HomeScore - AwayScore".
-
-    Note:
-        This function assumes that the NHL API's response structure remains consistent and that the 'games'
-        key is always present when there are games scheduled for the day. It does not handle API errors or
-        unexpected response structures gracefully.
-    """
-    games_list = []
-    url = 'https://api-web.nhle.com/v1/score/' + str(today) 
-    r = requests.get(url).json()
-    if 'games' in r:
-        for game in r['games']:
-            game_date = game.get('gameDate', {})
-            home_team_name = game.get('homeTeam', {}).get('abbrev')
-            home_team_score = game.get('homeTeam', {}).get('score')
-            home_team_logo = game.get('homeTeam', {}).get('logo')
-            away_team_name = game.get('awayTeam', {}).get('abbrev')
-            away_team_score = game.get('awayTeam', {}).get('score')
-            away_team_logo = game.get('awayTeam', {}).get('logo')
-            game_state = game.get('gameState', {})
-            games_list.append({
-                'game_date': game_date,
-                'home_team_name': home_team_name + " vs " + away_team_name,             
-                'Game state' : game_state,
-                'Score' : str(home_team_score) + " - " + str(away_team_score),
-            })
-    
-    return games_list
 
 def top_3_players():
     """
@@ -91,6 +41,7 @@ def top_3_players():
                 
             })
     return(top_3_playersl)
+
     
 
 nhl_team_abbreviations = [
@@ -152,9 +103,12 @@ async def fetch_team_rosters(session, abbreviation):
     async with session.get(url) as response:
         if response.status == 200:
             roster_data = await response.json()
-            return [player.get("id") for player in roster_data.get('forwards', [])]
+            forwards = [player.get("id") for player in roster_data.get('forwards', [])]
+            defensemen = [player.get("id") for player in roster_data.get('defensemen', [])]
+            return forwards + defensemen
         else:
-            return []
+            return [], []
+
 
 async def fetch_player_stats(session, player_id):
     """

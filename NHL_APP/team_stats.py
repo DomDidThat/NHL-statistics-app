@@ -1,4 +1,3 @@
-
 import requests
 import requests_cache
 from datetime import date
@@ -6,7 +5,7 @@ import aiohttp
 import asyncio
 from shared import format_shooting_percentage
 
-requests_cache.install_cache('nhl_api_cache', expire_after=3600)
+
 def top_3_teams():
     """
     Fetches and returns the top 3 teams from the NHL standings.

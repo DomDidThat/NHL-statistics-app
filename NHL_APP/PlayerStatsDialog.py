@@ -2,11 +2,7 @@ import sys
 import asyncio
 from PyQt5.QtWidgets import QApplication, QDialog, QTableWidget, QTableWidgetItem, QVBoxLayout, QPushButton, QHeaderView, QMessageBox, QSizePolicy
 from PyQt5.QtCore import Qt
-import requests_cache
 from shared import get_all_team_rosters_and_player_stats
-
-# Install the cache with a specified expiration time (in seconds)
-requests_cache.install_cache("nhl_api_cache", expire_after=3600)
 
 class PlayerStatsDialog(QDialog):
     def __init__(self, parent=None):

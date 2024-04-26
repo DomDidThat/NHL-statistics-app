@@ -1,10 +1,9 @@
 import sys
-import os
 import pyodbc
 import bcrypt
 from PyQt5.QtCore import Qt, pyqtSignal
-from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QMessageBox, QFormLayout, QSpacerItem, QSizePolicy
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QMessageBox, QFormLayout, QSpacerItem, QSizePolicy
 
 class LoginApp(QWidget):
     """
