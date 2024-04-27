@@ -125,9 +125,10 @@ class RegistrationPage(QWidget):
             query = "SELECT * FROM Users WHERE Email = ?"
             self.cursor.execute(query, (email,))
             result = self.cursor.fetchone()
-            if result[0] > 0:
+            if result is not None and result[0] > 0:
                 QMessageBox().warning(self, "Registration", "Email already exists!")
                 return
+                
             # Insert the user data into the database
             query = "INSERT INTO Users (Username, Email, Password) VALUES (?,?,?)"
             self.cursor.execute(query, (username, email, hashed_password))
