@@ -88,7 +88,7 @@ class HomeScreen(QWidget):
         self.tts_label.setAlignment(Qt.AlignLeft)
         self.tts_label.setFixedHeight(50)
         
-        self.top_teams_button = QPushButton("Top Teams", self)
+        self.top_teams_button = QPushButton("All Teams Stats", self)
         self.top_teams_button.setObjectName("topTeamsButton")
         self.top_teams_button.setFixedSize(100, 35)
         
@@ -163,9 +163,9 @@ class HomeScreen(QWidget):
         self.featured_players_label.setAlignment(Qt.AlignLeft )
         self.featured_players_label.setFixedHeight(50)
         
-        self.view_all_players_button = QPushButton("View All Players", self)
+        self.view_all_players_button = QPushButton("View All Player Stats", self)
         self.view_all_players_button.setObjectName("viewAllPlayersButton")
-        self.view_all_players_button.setFixedSize(100, 35)
+        self.view_all_players_button.setFixedSize(110, 35)
         
         fp1_container = QWidget(l3_container)
         fp1_container.setObjectName("fp1Container")

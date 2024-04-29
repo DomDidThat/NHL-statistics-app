@@ -121,6 +121,7 @@ class PlayerStatsDialog(QDialog):
                     item.setData(Qt.DisplayRole, float(value))
                 else: 
                     item = QTableWidgetItem(str(value))
+                item.setFlags(item.flags() ^ Qt.ItemIsEditable)
                 self.table_widget.setItem(row, col, item)
 
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)

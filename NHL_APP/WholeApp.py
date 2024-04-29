@@ -16,6 +16,7 @@ class MyApp(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("NHL Statistics App")  # Set the window title
+        self.setStyleSheet("Background-color: #FFFFFF")
 
         self.stacked_widget = QStackedWidget(self)  # Create a stacked widget to manage different pages
         self.setCentralWidget(self.stacked_widget)  # Set the stacked widget as the central widget of the window

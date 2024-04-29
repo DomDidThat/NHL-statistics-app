@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QTableWidgetItem, QPushButton, QHeaderView, QMessageBox, QSizePolicy
+from PyQt5.QtWidgets import QDialog, QVBoxLayout, QTableWidget, QTableWidgetItem, QPushButton, QHeaderView, QMessageBox, QSizePolicy, QApplication
 from PyQt5.QtCore import Qt
 import asyncio
+import sys
 
 from team_stats import team_standings  # Import the function to fetch team data
 
@@ -85,6 +86,7 @@ class TeamStatsDialog(QDialog):
         for row, team in enumerate(team_data):
             for col, (key, value) in enumerate(team.items()):
                 item = QTableWidgetItem(str(value))
+                item.setFlags(item.flags() ^ Qt.ItemIsEditable)
                 self.table_widget.setItem(row, col, item)
 
         self.table_widget.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
@@ -119,3 +121,12 @@ async def fetch_team_data():
     """
     team_data = await team_standings()  # Use the appropriate function to fetch team data
     return team_data
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    dialog = TeamStatsDialog()
+    try:
+        dialog.show()
+        sys.exit(app.exec_())
+    except Exception as e:
+        print(f"An error occurred: {e}")
